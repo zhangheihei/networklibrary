@@ -13,7 +13,7 @@
 #include <assert.h>
 #endif
 
-#include <muduo/base/noncopyable.h>
+#include "noncopyable.h"
 
 ///
 /// The most common stuffs.
