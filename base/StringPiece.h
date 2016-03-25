@@ -50,7 +50,7 @@ public:
 		: ptr_(str.data()), length_(static_cast<int>(str.size())){ }
 #ifndef MUDUO_STD_STRING
 	StringPiece(const std::string& str)
-		:ptr_(str.data(), length_(static_cast<int>(str.size()))) { }
+		:ptr_(str.data()), length_(static_cast<int>(str.size())){ }
 #endif 
 	StringPiece(const char* offset, int len)
 		:ptr_(offset), length_(len) { }
@@ -88,7 +88,7 @@ public:
 
 	bool operator==(const StringPiece& x) const
 	{
-		return ((length_ == x.length_) && (memcmp(ptr_, x.ptr_, length_) == 0))
+		return ((length_ == x.length_) && (memcmp(ptr_, x.ptr_, length_) == 0));
 	}
 
 	bool operator != (const StringPiece& x) const
@@ -98,11 +98,11 @@ public:
 	
 #define STRINGPIECE_BINARY_PREDICATE(cmp, auxcmp)  \
 	bool operator cmp (const StringPiece& x) const {   \
-		int r = memcmp(ptr_, x.ptr_. length < x.length_ ? length_ : x.length_); \
+		int r = memcmp(ptr_, x.ptr_, length_ < x.length_ ? length_ : x.length_); \
 		return ((r auxcmp 0) || ((r == 0) && (length_ cmp x.length_))); \
 	}
 	
-	STRINGPIECE_BINARY_PREDICATE(<. <);
+	STRINGPIECE_BINARY_PREDICATE(<, <);
 	STRINGPIECE_BINARY_PREDICATE(<=, <);
 	STRINGPIECE_BINARY_PREDICATE(>=, >);
 	STRINGPIECE_BINARY_PREDICATE(>, >);
