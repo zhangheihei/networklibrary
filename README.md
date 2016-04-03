@@ -4,4 +4,4 @@ A C++ non-blocking network library for multi-threaded server in Linux by chenshu
 
 
 
-I'm rewriting program used C++11.
+I'm rewriting program used C++11

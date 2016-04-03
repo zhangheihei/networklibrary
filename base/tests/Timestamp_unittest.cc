@@ -22,13 +22,12 @@ void benchmark()
 	stamps.reserve(kNumber);
 	for (int i = 0; i < kNumber; ++i)
 	{
-		stamps.push_back(Timestamp::now())
+		stamps.push_back(Timestamp::now());
 	}
 
 	printf("%s\n", stamps.front().toString().c_str());
 	printf("%s\n", stamps.back().toString().c_str());
-	printf("%s\n", timeDifference(stamps.back(), stamps.front()));
-
+	printf("%f\n", timeDifference(stamps.back(), stamps.front()));
 	int increments[100] = { 0 };
 	int64_t start = stamps.front().microSecondsSinceEpoch();
 
