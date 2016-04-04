@@ -7,8 +7,8 @@
 // Author: Shuo Chen (chenshuo at chenshuo dot com)
 //
 
-#include "../FileUtil.h"
-#include "../Logging.h" // strerror_tl
+#include "FileUtil.h"
+#include "Logging.h" // strerror_tl
 
 #include <assert.h>
 #include <errno.h>
@@ -93,7 +93,7 @@ int FileUtil::ReadSmallFile::readToString(int maxSize,
                                           int64_t* modifyTime,
                                           int64_t* createTime)
 {
-  static_assert(sizeof(off_t) == 8, "_FILE_OFFSET_BITS = 64");
+  static_assert(sizeof(off_t) == 4, "_FILE_OFFSET_BITS = 64");
   assert(content != NULL);
   int err = err_;
   if (fd_ >= 0)

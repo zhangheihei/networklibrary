@@ -1,5 +1,5 @@
 #ifndef MUDUO_BASE_CURRENTTHREAD_H
-#ifndef MUDUO_BASE_CURRENTTHREAD_H
+#define MUDUO_BASE_CURRENTTHREAD_H
 #include <stdint.h>
 namespace muduo
 {
@@ -19,7 +19,7 @@ namespace CurrentThread
 		return t_cachedTid;
 	}
 
-	inline const char* tidString
+	inline const char* tidString()
 	{
 		return t_tidString;
 	}
