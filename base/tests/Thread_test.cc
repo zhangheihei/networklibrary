@@ -26,6 +26,7 @@ void threadFunc3()
 {
 	printf("tid=%d, t_tidString=%s, t_threadName=%s\n", muduo::CurrentThread::tid(), muduo::CurrentThread::tidString(), muduo::CurrentThread::name());
 	mysleep(1);
+	printf("tid=%d, sleep over \n", muduo::CurrentThread::tid());
 }
 
 class Foo
@@ -38,13 +39,12 @@ public:
 
 	void memberFunc()
 	{
-		printf("tid=%d, Foo::x_%f\n, t_tidString=%s, t_threadName=%s", muduo::CurrentThread::tid(), x_, muduo::CurrentThread::tidString(), muduo::CurrentThread::name());
+		printf("tid=%d, Foo::x_%f, t_tidString=%s, t_threadName=%s\n", muduo::CurrentThread::tid(), x_, muduo::CurrentThread::tidString(), muduo::CurrentThread::name());
 	}
 
-	void memberFunc2()(const std::string& text)
+	void memberFunc2(const std::string& text)
 	{
-		printf("tid=%d, Foo::x_=%f, text=%s\n, t_tidString=%s, t_threadName =%s", muduo::CurrentThread::tid(), x_, 
-				muduo::CurrentThread::tidString(), muduo::CurrentThread::name());
+		printf("tid=%d, Foo::x_=%f, text=%s, t_tidString=%s, t_threadName =%s\n", muduo::CurrentThread::tid(), x_, text.c_str(), muduo::CurrentThread::tidString(), muduo::CurrentThread::name());
 	}
 private:
 	double x_;
@@ -52,6 +52,43 @@ private:
 
 int main()
 {
-	printf("pid=%d, tid=%d\n, t_tidString=%s, t_threadName=%s", ::getpid(), muduo:CurrentThread::tid(),
+	printf("pid=%d, tid=%d, t_tidString=%s, t_threadName=%s\n", ::getpid(), muduo::CurrentThread::tid(),
 			muduo::CurrentThread::tidString(), muduo::CurrentThread::name());
+//	printf("pid=%d, tid=%d, t_tidString=%s, t_threadName=%s\n", ::getpid(), muduo::CurrentThread::tid(),
+//			t_tidString, t_threadName);
+/*
+	std::function<void ()>	 testFunc1_ = std::bind(threadFunc);
+	muduo::Thread t1(testFunc1_);
+	t1.start();
+	t1.join();
+
+	std::function<void ()> testFunc2_ = std::bind(threadFunc2, 42);
+
+	muduo::Thread t2(std::move(testFunc2_), "thread for free function with argument(rvalue)");
+	t2.start();
+	t2.join();
+
+	Foo foo(87.53);
+	muduo::Thread t3(std::bind(&Foo::memberFunc, &foo), "thread for member function without argument");
+	
+	t3.start();
+	t3.join();
+
+	muduo::Thread t4(std::bind(&Foo::memberFunc2, std::ref(foo), std::string("Shuo CHen")));
+	t4.start();
+	t4.join();
+	*/
+	{
+	muduo::Thread t5(threadFunc3);
+	t5.start();
+	}
+	
+	/*
+	{
+		muduo::Thread t6(threadFunc3);
+		t6.start();
+		mysleep(2);
+	}
+	*/
+				
 }

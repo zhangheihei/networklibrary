@@ -85,6 +85,7 @@ struct ThreadData
 		{
 			func_();
 			muduo::CurrentThread::t_threadName = "finished";
+		//	printf("tid=%d, t_threadName=%s\n", muduo::CurrentThread::t_cachedTid, muduo::CurrentThread::t_threadName);
 		}
 		catch (const Exception& ex)
 		{
@@ -156,6 +157,8 @@ Thread::Thread(const ThreadFunc& func, const string& n)
 	  func_(func),
 	  name_(n)
 {
+
+//	printf("tid=%d use construct\n", muduo::CurrentThread::t_cachedTid);
 	setDefaultName();
 }
 
@@ -168,6 +171,7 @@ Thread::Thread(ThreadFunc&& func, const string& n)
 	  func_(std::move(func)),
 	  name_(n)
 {
+	//printf("tid=%d use move construct\n", muduo::CurrentThread::t_cachedTid);
 	setDefaultName();
 }
 #endif
@@ -178,6 +182,7 @@ Thread::~Thread()
 	{
 		pthread_detach(pthreadId_);
 	}
+	printf("destructor\n");
 }
 
 void Thread::setDefaultName()
