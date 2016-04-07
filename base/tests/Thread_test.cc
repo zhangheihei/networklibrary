@@ -82,7 +82,7 @@ int main()
 	muduo::Thread t5(threadFunc3);
 	t5.start();
 	}
-	
+sleep(2);	
 	/*
 	{
 		muduo::Thread t6(threadFunc3);
