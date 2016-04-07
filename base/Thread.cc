@@ -182,7 +182,7 @@ Thread::~Thread()
 	{
 		pthread_detach(pthreadId_);
 	}
-	printf("destructor\n");
+//	printf("destructor\n");
 }
 
 void Thread::setDefaultName()

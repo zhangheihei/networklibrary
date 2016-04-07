@@ -23,7 +23,7 @@ __END_DECLS
 						__assert_perror_fail (errnum, __FILE__, __LINE__, __func__);})
 #else // CHECK_PTHREAD_RETURN_VALUE
 
-#define MCHECK(ret) ({__typeof__ (ret) errnum = (ret); \ assert(errnum == 0); (void) errnum;})
+#define MCHECK(ret) ({__typeof__ (ret) errnum = (ret);  assert(errnum == 0); (void) errnum;})
 
 #endif //CHECK_PTHREAD_RETURN_VALUE
 
@@ -62,7 +62,7 @@ public:
 	void unlock()
 	{
 		unassignHolder();
-		MCHECK(pthread_mutex_unlock(&mutex));
+		MCHECK(pthread_mutex_unlock(&mutex_));
 	}
 
 	pthread_mutex_t* getPthreadMutex()

@@ -4,7 +4,7 @@ using namespace muduo;
 
 CountDownLatch::CountDownLatch(int count)
 	:mutex_(),
-	 conditon_(mutex_),
+	 condition_(mutex_),
 	 count_(count)
 {
 }
@@ -25,7 +25,7 @@ void CountDownLatch::countDown()
 
 	if (count_ == 0)
 	{
-		conditon_.notifyAll();
+		condition_.notifyAll();
 	}
 }
 

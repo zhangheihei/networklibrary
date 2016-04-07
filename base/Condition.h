@@ -1,6 +1,6 @@
 #ifndef MUDUO_BASE_CONDITION_H
 #define MUDUO_BASE_CONDITION_H
-#include "mutex.h"
+#include "Mutex.h"
 #include <pthread.h>
 
 namespace muduo
@@ -27,7 +27,7 @@ public:
 
 	void notify()
 	{
-		MCHECK(pthread_cond_signal(&pc));
+		MCHECK(pthread_cond_signal(&pcond_));
 	}
 
 	void notifyAll()

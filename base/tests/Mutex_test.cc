@@ -37,8 +37,51 @@ int foo()
 	return 0;
 }
 
-
 int main()
 {
+	MCHECK(foo());
+	if (g_count != 1)
+	{
+		printf("MCHECK calls twice.");
+		abort();
+	}
 
+	const int kMaxThreads = 8;
+	g_vec.reserve(kMaxThreads * kCount);
+
+
+//单线程 无锁
+	Timestamp start(Timestamp::now());
+	for (int i = 0; i < kCount; ++i)
+	{
+		g_vec.push_back(i);
+	}
+	printf("single thread without lock %f\n", timeDifference(Timestamp::now(), start));
+//单线程 有锁
+	start = Timestamp::now();
+	threadFunc();
+	printf("single thread with lock %f\n", timeDifference(Timestamp::now(), start));
+
+//多线程 从2个线程增加到8个线程
+
+	for (int nthreads = 1; nthreads < kMaxThreads; ++nthreads)
+	{
+		std::vector<std::unique_ptr<Thread>> threads;
+		g_vec.clear();
+		start = Timestamp::now();
+		for (int i = 0; i < nthreads; ++i)
+		{
+			threads.emplace_back(new Thread(&threadFunc));
+			threads.back()->start();
+		}
+		for (auto &threadIte : threads)
+		{
+			threadIte->join();
+		}
+		printf("%d thread(s) with lock %f\n", nthreads, timeDifference(Timestamp::now(), start));
+			
+	}	
 }
+
+
+
