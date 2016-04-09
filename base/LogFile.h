@@ -1,8 +1,8 @@
 #ifndef MUDUO_BASE_LOGFILE_H
 #define MUDUO_BASE_LOGFILE_H
 
-#include "../Mutex.h"
-#include "../Types.h"
+#include "Mutex.h"
+#include "Types.h"
 
 #include <memory>
 
