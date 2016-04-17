@@ -10,7 +10,7 @@ namespace detail
 template<typename T>
 struct has_no_destroy
 {
-	template <typename c> static char test(decltype(&C::no_destroy));
+	template <typename C> static char test(decltype(&C::no_destroy));
 	template <typename C> static int32_t test(...);
 	const static bool value = sizeof(test<T>(0)) == 1;
 };
@@ -20,7 +20,7 @@ template<typename T>
 class Singleton : noncopyable
 {
 public:
-	static T& instance();
+	static T& instance()
 	{
 		pthread_once(&ponce_, &Singleton::init);
 		assert(value_ != NULL);
@@ -52,10 +52,10 @@ private:
 	static pthread_once_t ponce_;
 	static T* value_;
 };//Singleton
-}//muduo
-
 template<typename T>
 pthread_once_t Singleton<T>::ponce_ = PTHREAD_ONCE_INIT;
 
 template<typename T>
 T* Singleton<T>::value_ = NULL;
+}//muduo
+
