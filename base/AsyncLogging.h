@@ -4,11 +4,11 @@
 #include "CountDownLatch.h"
 #include "Mutex.h"
 #include "Thread.h"
-
+#include <vector>
 #include "LogStream.h"
 namespace muduo
 {
-class AsynLogging : noncopyable
+class AsyncLogging : noncopyable
 {
 public:
 	AsyncLogging(const string& basename, 
@@ -26,7 +26,7 @@ public:
 
 	void start()
 	{
-		running_ true;
+		running_ =true;
 		thread_.start();
 		latch_.wait();
 	}
@@ -39,7 +39,7 @@ public:
 	}
 
 private:
-	void ThreadFunc();
+	void threadFunc();
 
 	typedef muduo::detail::FixedBuffer<muduo::detail::kLargeBuffer> Buffer;
 	typedef std::vector<std::unique_ptr<Buffer>> BufferVector;
@@ -55,7 +55,7 @@ private:
 	muduo::Condition cond_;
 	BufferPtr currentBuffer_;
 	BufferPtr nextBuffer_;
-	BufferVector buffer_;
+	BufferVector buffers_;
 };//AsynLogging
 }//muduo
 #endif //MUDUO_BASE_ASYNCLOGGING_H
